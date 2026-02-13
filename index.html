@@ -3,252 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>You're the Sunflower | Spider-Goal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Spider-Sense & Goals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --spider-red: #e62429;
-            --spider-blue: #005a9c;
-            --sunflower-yellow: #ffcf33;
-            --pitch-green: #1a472a;
-            --dark-blue: #0b1e3b;
+            --spidey-red: #ff0000;
+            --spidey-blue: #0044ff;
+            --tech-gold: #ffcc00;
+            --pitch-dark: #050505;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--dark-blue);
-            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
             color: white;
+            font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
         }
 
-        /* --- FONDO DINÁMICO --- */
-        .background-layer {
+        /* --- FONDO ANIMADO DE CIUDAD (PARALLAX) --- */
+        .city-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(230, 36, 41, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 207, 51, 0.1) 0%, transparent 40%);
+            background: linear-gradient(to bottom, #000428, #004e92);
+            z-index: -2;
+            overflow: hidden;
         }
 
-        /* Líneas de fútbol + Telarañas */
-        .pitch-lines {
+        .building {
+            position: absolute;
+            bottom: 0;
+            background: #050505;
+            width: 80px;
+            height: 200px;
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+            animation: moveCity 20s linear infinite;
+        }
+
+        @keyframes moveCity {
+            from { transform: translateX(100vw); }
+            to { transform: translateX(-200px); }
+        }
+
+        /* --- SPIDER-MAN COLUMPIÁNDOSE --- */
+        .swinging-spidey {
+            position: fixed;
+            top: -50px;
+            left: 50%;
+            width: 100px;
+            z-index: -1;
+            animation: swing 4s ease-in-out infinite alternate;
+            transform-origin: top center;
+        }
+
+        @keyframes swing {
+            from { transform: rotate(-30deg) translateX(-100px); }
+            to { transform: rotate(30deg) translateX(100px); }
+        }
+
+        /* --- LÍNEAS DE CAMPO DE FÚTBOL --- */
+        .pitch-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            border: 2px solid rgba(255,255,255,0.05);
+            background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
+            border: 2px solid rgba(255,255,255,0.1);
             pointer-events: none;
             z-index: -1;
         }
-        .pitch-lines::before {
-            content: "";
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 200px; height: 200px;
-            border: 2px solid rgba(255,255,255,0.05);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-        }
 
-        /* --- HEADER ESTILO CÓMIC --- */
+        /* --- HEADER --- */
         header {
             text-align: center;
-            padding: 60px 20px;
-            position: relative;
+            padding: 80px 20px;
+        }
+
+        .logo-spider {
+            width: 80px;
+            filter: drop-shadow(0 0 10px var(--spidey-red));
+            margin-bottom: 20px;
         }
 
         .main-title {
             font-family: 'Bangers', cursive;
-            font-size: clamp(3rem, 10vw, 6rem);
-            color: var(--sunflower-yellow);
-            text-shadow: 4px 4px 0px var(--spider-red), 8px 8px 0px var(--spider-blue);
-            letter-spacing: 5px;
-            transform: rotate(-2deg);
-            animation: pop 0.5s ease-out;
+            font-size: clamp(3rem, 12vw, 6rem);
+            color: white;
+            text-shadow: 4px 4px var(--spidey-red), -4px -4px var(--spidey-blue);
+            text-transform: uppercase;
         }
 
-        @keyframes pop {
-            0% { transform: scale(0) rotate(-10deg); }
-            80% { transform: scale(1.1) rotate(2deg); }
-            100% { transform: scale(1) rotate(-2deg); }
-        }
-
-        /* --- REPRODUCTOR (MARCADOR) --- */
-        .scoreboard-player {
-            max-width: 400px;
-            margin: 0 auto 40px;
-            background: #111;
-            border: 4px solid #444;
-            padding: 15px;
+        /* --- REPRODUCTOR STARK TECH --- */
+        .tech-player {
+            max-width: 450px;
+            margin: 0 auto 50px;
+            background: rgba(10, 10, 10, 0.9);
+            border-left: 5px solid var(--spidey-red);
+            border-right: 5px solid var(--spidey-blue);
+            padding: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            border-radius: 10px;
-            position: relative;
+            gap: 20px;
+            box-shadow: 0 0 30px rgba(0, 68, 255, 0.3);
+            border-radius: 4px;
         }
 
-        .scoreboard-player::before {
-            content: "LIVE MATCH: SUNFLOWER FT. SPIDEY";
-            position: absolute;
-            top: -25px; left: 10px;
-            font-family: 'Bangers';
-            color: var(--sunflower-yellow);
-            font-size: 0.9rem;
-        }
-
-        .album-art {
-            width: 60px; height: 60px;
-            background: var(--sunflower-yellow);
-            border-radius: 5px;
+        .ball-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--tech-gold);
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 2rem;
-            animation: spin 5s linear infinite;
+            box-shadow: 0 0 15px var(--tech-gold);
+            animation: rotateBall 4s linear infinite;
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes rotateBall { 100% { transform: rotate(360deg); } }
 
-        audio { width: 100%; filter: invert(1); }
+        audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
 
         /* --- CONTENEDOR DEL MENSAJE --- */
-        .content-wrap {
-            max-width: 800px;
+        .message-wrap {
+            max-width: 850px;
             margin: 0 auto 100px;
             padding: 20px;
-            position: relative;
         }
 
-        .message-panel {
-            background: white;
+        .comic-panel {
+            background: #fff;
             color: #111;
             padding: 40px;
-            border: 5px solid #111;
-            box-shadow: 15px 15px 0px var(--spider-red);
+            border: 6px solid #111;
+            box-shadow: 15px 15px 0px var(--spidey-blue);
             position: relative;
-            z-index: 5;
-            border-radius: 2px;
-        }
-
-        /* Decoración comic */
-        .comic-dot {
-            position: absolute;
-            width: 100%; height: 100%;
-            top: 0; left: 0;
-            background-image: radial-gradient(#ccc 1px, transparent 1px);
-            background-size: 10px 10px;
-            opacity: 0.2;
-            pointer-events: none;
+            transform: rotate(1deg);
         }
 
         .text-body {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             line-height: 1.8;
-            font-weight: 500;
+            font-weight: 600;
             text-align: justify;
-            position: relative;
-            z-index: 2;
         }
 
         .text-body p { margin-bottom: 20px; }
 
         .highlight {
-            background: var(--sunflower-yellow);
-            padding: 0 5px;
-            font-weight: 900;
+            color: var(--spidey-red);
+            font-weight: 800;
+            border-bottom: 3px solid var(--spidey-blue);
         }
 
-        /* --- ICONOS FLOTANTES --- */
-        .floating-elements img {
+        /* --- STATS CARD (ESTILO CARTA DE FÚTBOL) --- */
+        .fut-card {
+            background: linear-gradient(135deg, #111, #333);
+            border: 2px solid var(--tech-gold);
+            padding: 20px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-around;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-item h3 { font-family: 'Bangers'; color: var(--tech-gold); font-size: 2rem; }
+        .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* --- TELARAÑAS DECORATIVAS --- */
+        .web-corner {
             position: absolute;
-            pointer-events: none;
+            width: 100px;
+            opacity: 0.2;
             z-index: 10;
         }
-
-        .ball {
-            width: 50px;
-            filter: drop-shadow(0 0 10px white);
-            animation: kick 4s infinite linear;
-        }
-
-        @keyframes kick {
-            0% { top: 10%; left: -10%; transform: rotate(0deg); }
-            50% { top: 80%; left: 110%; transform: rotate(720deg); }
-            100% { top: 10%; left: -10%; transform: rotate(0deg); }
-        }
-
-        /* --- SECCIÓN EXTRA: TARJETA DE JUGADOR --- */
-        .player-card {
-            margin-top: 50px;
-            background: linear-gradient(135deg, var(--spider-red), var(--spider-blue));
-            padding: 20px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border: 3px solid white;
-        }
-
-        .stat-circle {
-            width: 80px; height: 80px;
-            border: 4px solid var(--sunflower-yellow);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.3);
-        }
-
-        .stat-circle span { font-weight: 900; font-size: 1.2rem; }
-        .stat-circle label { font-size: 0.6rem; text-transform: uppercase; }
 
         footer {
             text-align: center;
             padding: 50px;
-            font-family: 'Permanent Marker', cursive;
-            color: rgba(255,255,255,0.3);
+            font-family: 'Permanent Marker';
+            color: #444;
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .message-panel { padding: 25px; }
-            .player-card { flex-wrap: wrap; justify-content: center; }
-        }
     </style>
 </head>
 <body>
 
-    <div class="background-layer"></div>
-    <div class="pitch-lines"></div>
+    <!-- Fondo de Ciudad -->
+    <div class="city-bg" id="city"></div>
+    <div class="pitch-overlay"></div>
 
-    <!-- Elementos Animados -->
-    <div class="floating-elements">
-        <img src="https://cdn-icons-png.flaticon.com/512/53/53254.png" class="ball" alt="soccer ball">
+    <!-- Spider-Man Columpiándose -->
+    <div class="swinging-spidey">
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <line x1="50" y1="-500" x2="50" y2="50" stroke="white" stroke-width="2" />
+            <circle cx="50" cy="70" r="25" fill="#ff0000" stroke="black" stroke-width="3" />
+            <path d="M40 65 Q50 55 60 65" stroke="white" stroke-width="3" fill="none" />
+            <path d="M40 75 Q50 85 60 75" stroke="white" stroke-width="3" fill="none" />
+        </svg>
     </div>
 
     <header>
-        <h1 class="main-title">SPIDEY-SENSE</h1>
-        <p style="font-family: 'Permanent Marker'; color: var(--sunflower-yellow); font-size: 1.5rem;">GOOOOAL! YOU'RE THE SUNFLOWER</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Spider-Man_movie_logo.png" class="logo-spider" alt="logo">
+        <h1 class="main-title">SPIDER-SOCCER</h1>
+        <p style="font-family: 'Permanent Marker'; color: var(--tech-gold); font-size: 1.5rem; margin-top: 10px;">¡GOLAZO DIRECTO AL CORAZÓN!</p>
     </header>
 
-    <!-- Scoreboard / Player -->
-    <div class="scoreboard-player">
-        <div class="album-art">🌻</div>
+    <!-- Stark Player -->
+    <div class="tech-player">
+        <div class="ball-icon">⚽</div>
         <div style="flex-grow: 1;">
-            <p style="font-weight: bold; color: white; font-size: 0.9rem;">Sunflower</p>
-            <p style="font-size: 0.7rem; color: #888;">Post Malone & Swae Lee</p>
+            <p style="color: var(--spidey-red); font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">PLAYING TRANSMISSION:</p>
+            <p style="font-family: 'Bangers'; font-size: 1.2rem;">Sunflower - Post Malone</p>
             <audio controls>
                 <source src="sunflower.mp3" type="audio/mpeg">
-                Tu navegador no soporta el audio.
             </audio>
         </div>
     </div>
 
-    <!-- Mensaje Principal -->
-    <div class="content-wrap">
-        <div class="message-panel">
-            <div class="comic-dot"></div>
+    <div class="message-wrap">
+        <div class="comic-panel">
             <div class="text-body">
                 <p>Quiero que nunca olvides algo muy importante: <span class="highlight">no dejes de sonreír, pase lo que pase</span>. Tu sonrisa no es algo simple, no es cualquier gesto… es una luz. Es de esas que cambian el ambiente sin que te des cuenta, que alivian momentos tensos, que hacen que los días difíciles se sientan un poco más ligeros. Tienes una alegría muy tuya, muy genuina, que se nota que nace del corazón y que contagia a todos los que están cerca de ti.</p>
 
@@ -266,60 +239,60 @@
             </div>
         </div>
 
-        <!-- Player Card Section -->
-        <div class="player-card">
-            <div style="flex-grow: 1;">
-                <h3 style="font-family: 'Bangers'; font-size: 1.8rem;">Player Stats: THE BEST</h3>
-                <p style="font-size: 0.8rem;">Posición: Persona Favorita</p>
+        <!-- Player Card Stats -->
+        <div class="fut-card">
+            <div class="stat-item">
+                <h3>99</h3>
+                <p>Sonrisa</p>
             </div>
-            <div class="stat-circle">
-                <span>99</span>
-                <label>Joy</label>
+            <div class="stat-item" style="border-left: 1px solid #555; border-right: 1px solid #555; padding: 0 20px;">
+                <h3>99</h3>
+                <p>Lealtad</p>
             </div>
-            <div class="stat-circle">
-                <span>99</span>
-                <label>Smile</label>
-            </div>
-            <div class="stat-circle">
-                <span>99</span>
-                <label>Loyal</label>
+            <div class="stat-item">
+                <h3>99</h3>
+                <p>Corazón</p>
             </div>
         </div>
     </div>
 
     <footer>
-        WITH GREAT POWER COMES GREAT RESPONSIBILITY... AND A GREAT SMILE.
+        -- HAWKINS MEET NEW YORK // SPIDEY SENSES TINGLING --
     </footer>
 
     <script>
-        // Efecto simple de telarañas al hacer click
-        document.addEventListener('click', function(e) {
+        // Generar edificios de forma aleatoria en el fondo
+        const city = document.getElementById('city');
+        for (let i = 0; i < 15; i++) {
+            let b = document.createElement('div');
+            b.className = 'building';
+            b.style.left = (Math.random() * 100) + 'vw';
+            b.style.height = (Math.random() * 300 + 100) + 'px';
+            b.style.width = (Math.random() * 50 + 50) + 'px';
+            b.style.animationDelay = (Math.random() * 20) + 's';
+            city.appendChild(b);
+        }
+
+        // Efecto de telaraña al hacer click
+        document.addEventListener('mousedown', (e) => {
             let web = document.createElement('div');
-            web.className = 'web-click';
-            web.style.left = e.pageX + 'px';
-            web.style.top = e.pageY + 'px';
+            web.style.position = 'fixed';
+            web.style.left = e.clientX + 'px';
+            web.style.top = e.clientY + 'px';
+            web.style.width = '2px';
+            web.style.height = '2px';
+            web.style.background = 'white';
+            web.style.boxShadow = '0 0 10px 2px white';
+            web.style.borderRadius = '50%';
+            web.style.transition = 'transform 0.5s ease-out, opacity 0.5s';
             document.body.appendChild(web);
             
-            setTimeout(() => { web.remove(); }, 1000);
+            setTimeout(() => {
+                web.style.transform = 'scale(50)';
+                web.style.opacity = '0';
+            }, 10);
+            setTimeout(() => web.remove(), 600);
         });
-
-        // Estilo dinámico para el click
-        const style = document.createElement('style');
-        style.innerHTML = `
-            .web-click {
-                position: absolute;
-                width: 2px; height: 2px;
-                background: white;
-                box-shadow: 0 0 10px 2px white;
-                border-radius: 50%;
-                pointer-events: none;
-                animation: web-expand 0.5s ease-out forwards;
-            }
-            @keyframes web-expand {
-                to { transform: scale(30); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>

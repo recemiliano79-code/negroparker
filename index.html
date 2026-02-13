@@ -11,210 +11,212 @@
             --spidey-blue: #0044ff;
             --tech-gold: #ffcc00;
             --pitch-dark: #050505;
+            --spider-web: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #000;
+            background-color: var(--pitch-dark);
             color: white;
             font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
+            /* Patrón de puntos de cómic */
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* --- FONDO ANIMADO DE CIUDAD (PARALLAX) --- */
-        .city-bg {
+        /* --- FONDO DE TELARAÑAS --- */
+        .web-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, #000428, #004e92);
+            background: 
+                radial-gradient(circle at 50% 50%, transparent 20%, var(--pitch-dark) 80%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cpath d='M200 0 L200 400 M0 200 L400 200 M40 40 L360 360 M360 40 L40 360' stroke='white' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='200' cy='200' r='40' stroke='white' stroke-width='0.5' fill='none' opacity='0.2'/%3E%3Ccircle cx='200' cy='200' r='80' stroke='white' stroke-width='0.5' fill='none' opacity='0.2'/%3E%3Ccircle cx='200' cy='200' r='120' stroke='white' stroke-width='0.5' fill='none' opacity='0.2'/%3E%3Ccircle cx='200' cy='200' r='160' stroke='white' stroke-width='0.5' fill='none' opacity='0.2'/%3E%3C/svg%3E");
+            background-attachment: fixed;
             z-index: -2;
-            overflow: hidden;
+            animation: webPulse 10s infinite alternate;
         }
 
-        .building {
-            position: absolute;
-            bottom: 0;
-            background: #050505;
-            width: 80px;
-            height: 200px;
-            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
-            animation: moveCity 20s linear infinite;
-        }
-
-        @keyframes moveCity {
-            from { transform: translateX(100vw); }
-            to { transform: translateX(-200px); }
-        }
-
-        /* --- SPIDER-MAN COLUMPIÁNDOSE --- */
-        .swinging-spidey {
-            position: fixed;
-            top: -50px;
-            left: 50%;
-            width: 100px;
-            z-index: -1;
-            animation: swing 4s ease-in-out infinite alternate;
-            transform-origin: top center;
-        }
-
-        @keyframes swing {
-            from { transform: rotate(-30deg) translateX(-100px); }
-            to { transform: rotate(30deg) translateX(100px); }
-        }
-
-        /* --- LÍNEAS DE CAMPO DE FÚTBOL --- */
-        .pitch-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
-            border: 2px solid rgba(255,255,255,0.1);
-            pointer-events: none;
-            z-index: -1;
+        @keyframes webPulse {
+            from { opacity: 0.5; transform: scale(1); }
+            to { opacity: 0.8; transform: scale(1.05); }
         }
 
         /* --- HEADER --- */
         header {
             text-align: center;
-            padding: 80px 20px;
+            padding: 40px 15px;
         }
 
         .logo-spider {
-            width: 80px;
+            width: 60px;
             filter: drop-shadow(0 0 10px var(--spidey-red));
-            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .main-title {
             font-family: 'Bangers', cursive;
-            font-size: clamp(3rem, 12vw, 6rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             color: white;
-            text-shadow: 4px 4px var(--spidey-red), -4px -4px var(--spidey-blue);
-            text-transform: uppercase;
+            text-shadow: 3px 3px var(--spidey-red), -3px -3px var(--spidey-blue);
+            line-height: 1;
         }
 
-        /* --- REPRODUCTOR STARK TECH --- */
+        /* --- REPRODUCTOR --- */
         .tech-player {
-            max-width: 450px;
-            margin: 0 auto 50px;
-            background: rgba(10, 10, 10, 0.9);
-            border-left: 5px solid var(--spidey-red);
-            border-right: 5px solid var(--spidey-blue);
-            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+            margin: 0 auto 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--spidey-blue);
+            padding: 15px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            box-shadow: 0 0 30px rgba(0, 68, 255, 0.3);
-            border-radius: 4px;
+            gap: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 68, 255, 0.4);
         }
 
         .ball-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: var(--tech-gold);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 0 15px var(--tech-gold);
-            animation: rotateBall 4s linear infinite;
+            font-size: 1.5rem;
+            animation: rotateBall 5s linear infinite;
         }
 
-        @keyframes rotateBall { 100% { transform: rotate(360deg); } }
+        audio { width: 100%; filter: invert(1); height: 30px; }
 
-        audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
-
-        /* --- CONTENEDOR DEL MENSAJE --- */
+        /* --- MENSAJE --- */
         .message-wrap {
-            max-width: 850px;
-            margin: 0 auto 100px;
-            padding: 20px;
+            max-width: 800px;
+            width: 95%;
+            margin: 0 auto 50px;
         }
 
         .comic-panel {
             background: #fff;
             color: #111;
-            padding: 40px;
-            border: 6px solid #111;
-            box-shadow: 15px 15px 0px var(--spidey-blue);
+            padding: 30px 20px;
+            border: 4px solid #111;
+            box-shadow: 8px 8px 0px var(--spidey-red);
             position: relative;
-            transform: rotate(1deg);
+            transform: rotate(-0.5deg);
+        }
+
+        /* Adorno de esquina de telaraña */
+        .comic-panel::before {
+            content: "🕷️";
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
         }
 
         .text-body {
-            font-size: 1.2rem;
-            line-height: 1.8;
+            font-size: 1.1rem;
+            line-height: 1.6;
             font-weight: 600;
             text-align: justify;
         }
 
-        .text-body p { margin-bottom: 20px; }
+        .text-body p { margin-bottom: 15px; }
 
         .highlight {
-            color: var(--spidey-red);
+            background-color: var(--tech-gold);
+            padding: 0 4px;
+            color: black;
             font-weight: 800;
-            border-bottom: 3px solid var(--spidey-blue);
         }
 
-        /* --- STATS CARD (ESTILO CARTA DE FÚTBOL) --- */
+        /* --- CARTA FIFA SPIDEY --- */
         .fut-card {
-            background: linear-gradient(135deg, #111, #333);
-            border: 2px solid var(--tech-gold);
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            border: 3px solid var(--tech-gold);
             padding: 20px;
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-around;
-            border-radius: 10px;
+            margin: 40px auto;
+            width: 280px;
+            border-radius: 15px 15px 100px 15px; /* Forma de carta */
             text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
         }
 
-        .stat-item h3 { font-family: 'Bangers'; color: var(--tech-gold); font-size: 2rem; }
-        .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+        .fut-card h2 {
+            font-family: 'Bangers';
+            color: var(--tech-gold);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
 
-        /* --- TELARAÑAS DECORATIVAS --- */
-        .web-corner {
-            position: absolute;
-            width: 100px;
-            opacity: 0.2;
-            z-index: 10;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+        }
+
+        .stat-item h3 { color: var(--spidey-red); font-size: 1.5rem; }
+        .stat-item p { font-size: 0.7rem; text-transform: uppercase; color: #aaa; }
+
+        /* --- SPIDEY SENSE ANIMATION --- */
+        .spidey-sense {
+            position: relative;
+            display: inline-block;
+            animation: senseWave 1s infinite;
+        }
+
+        @keyframes senseWave {
+            0% { text-shadow: 0 0 0px var(--spidey-red); }
+            50% { text-shadow: 0 -5px 10px var(--spidey-red), 0 -10px 20px var(--spidey-red); }
+            100% { text-shadow: 0 0 0px var(--spidey-red); }
         }
 
         footer {
             text-align: center;
-            padding: 50px;
+            padding: 40px 20px;
             font-family: 'Permanent Marker';
-            color: #444;
+            color: #666;
+            font-size: 0.8rem;
         }
 
+        /* --- RESPONSIVO PARA MÓVIL --- */
+        @media (max-width: 600px) {
+            .main-title { font-size: 2.8rem; }
+            .comic-panel { padding: 20px 15px; }
+            .text-body { font-size: 1rem; }
+            .tech-player { flex-direction: column; text-align: center; }
+            .ball-icon { margin-bottom: 10px; }
+        }
+
+        @keyframes rotateBall { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- Fondo de Ciudad -->
-    <div class="city-bg" id="city"></div>
-    <div class="pitch-overlay"></div>
-
-    <!-- Spider-Man Columpiándose -->
-    <div class="swinging-spidey">
-        <svg viewBox="0 0 100 100" width="100" height="100">
-            <line x1="50" y1="-500" x2="50" y2="50" stroke="white" stroke-width="2" />
-            <circle cx="50" cy="70" r="25" fill="#ff0000" stroke="black" stroke-width="3" />
-            <path d="M40 65 Q50 55 60 65" stroke="white" stroke-width="3" fill="none" />
-            <path d="M40 75 Q50 85 60 75" stroke="white" stroke-width="3" fill="none" />
-        </svg>
-    </div>
+    <div class="web-bg"></div>
 
     <header>
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Spider-Man_movie_logo.png" class="logo-spider" alt="logo">
-        <h1 class="main-title">SPIDER-SOCCER</h1>
-        <p style="font-family: 'Permanent Marker'; color: var(--tech-gold); font-size: 1.5rem; margin-top: 10px;">¡GOLAZO DIRECTO AL CORAZÓN!</p>
+        <h1 class="main-title">SPIDEY-STARK<br>PROTOCOL</h1>
     </header>
 
-    <!-- Stark Player -->
     <div class="tech-player">
         <div class="ball-icon">⚽</div>
-        <div style="flex-grow: 1;">
-            <p style="color: var(--spidey-red); font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">PLAYING TRANSMISSION:</p>
-            <p style="font-family: 'Bangers'; font-size: 1.2rem;">Sunflower - Post Malone</p>
-            <audio controls>
+        <div style="flex-grow: 1; width: 100%;">
+            <p style="color: var(--spidey-red); font-weight: bold; letter-spacing: 2px; font-size: 0.7rem;">DECRYPTING AUDIO...</p>
+            <p style="font-family: 'Bangers'; font-size: 1.1rem; color: var(--tech-gold);">Sunflower - Post Malone</p>
+            <audio id="player" controls>
                 <source src="sunflower.mp3" type="audio/mpeg">
             </audio>
         </div>
@@ -229,9 +231,9 @@
 
                 <p>También quiero que sepas que eres una persona en la que se puede confiar mucho. Contigo se puede hablar sin miedo, sin máscaras, sin sentir que van a juzgarte. Sabes escuchar, sabes guardar lo que te cuentan, y sabes aconsejar cuando hace falta. Eso no lo tiene cualquiera. Tener a alguien como tú, con esa lealtad y esa sinceridad, es algo que realmente valoro muchísimo.</p>
 
-                <p>Y aunque a veces tú no lo veas así, <span class="highlight">eres inteligente</span>. Y te voy a decir por qué lo eres. Porque sabes analizar las situaciones más de lo que aparentas. Porque entiendes a las personas con una profundidad que no todos tienen. Porque cuando das un consejo, lo haces con lógica y con corazón. Porque aprendes de tus errores y buscas hacerlo mejor cada vez. La inteligencia no solo está en los libros o en las calificaciones; también está en la manera de pensar, de adaptarse, de reflexionar… y tú tienes todo eso.</p>
+                <p>Y aunque a veces tú no lo veas así, <span class="spidey-sense">eres inteligente</span>. Y te voy a decir por qué lo eres. Porque sabes analizar las situaciones más de lo que aparentas. Porque entiendes a las personas con una profundidad que no todos tienen. Porque cuando das un consejo, lo haces con lógica y con corazón. Porque aprendes de tus errores y buscas hacerlo mejor cada vez. La inteligencia no solo está en los libros o en las calificaciones; también está en la manera de pensar, de adaptarse, de reflexionar… y tú tienes todo eso.</p>
 
-                <p>Puede que en algunos momentos dudes de ti mismo, que sientas que no eres suficiente o que no eres tan capaz como otros, pero créeme que desde afuera se nota todo lo que vales. Tienes más potencial del que imaginas. Tienes una mente que funciona bien, un corazón que siente fuerte y una personalidad que marca diferencia.</p>
+                <p>Puede que en algunos momentos dudes de ti mismo, que sientas que no eres suficiente o que no eres tan capaz como otros, pero créeme que desde afuera se nota todo lo que vales. <span class="highlight">Tienes más potencial del que imaginas.</span> Tienes una mente que funciona bien, un corazón que siente fuerte y una personalidad que marca diferencia.</p>
 
                 <p>Nunca dejes de luchar por lo que quieres. Nunca dejes que una mala etapa te haga creer que eso define quién eres. Eres mucho más que cualquier error o cualquier momento difícil. Sigue sonriendo, sigue siendo tú, sigue confiando en lo que puedes lograr.</p>
 
@@ -239,60 +241,50 @@
             </div>
         </div>
 
-        <!-- Player Card Stats -->
+        <!-- Carta FIFA / FUT CARD -->
         <div class="fut-card">
-            <div class="stat-item">
-                <h3>99</h3>
-                <p>Sonrisa</p>
-            </div>
-            <div class="stat-item" style="border-left: 1px solid #555; border-right: 1px solid #555; padding: 0 20px;">
-                <h3>99</h3>
-                <p>Lealtad</p>
-            </div>
-            <div class="stat-item">
-                <h3>99</h3>
-                <p>Corazón</p>
+            <p style="font-size: 0.8rem; color: var(--tech-gold);">LEGENDARY PERSON</p>
+            <h2>99</h2>
+            <div class="stats-grid">
+                <div class="stat-item"><h3>99</h3><p>SONRISA</p></div>
+                <div class="stat-item"><h3>99</h3><p>INTEL</p></div>
+                <div class="stat-item"><h3>99</h3><p>LEALTAD</p></div>
+                <div class="stat-item"><h3>99</h3><p>CORAZÓN</p></div>
             </div>
         </div>
     </div>
 
     <footer>
-        -- HAWKINS MEET NEW YORK // SPIDEY SENSES TINGLING --
+        -- PROTOCOLO FINALIZADO -- <br>
+        WITH GREAT POWER COMES GREAT RESPONSIBILITY
     </footer>
 
     <script>
-        // Generar edificios de forma aleatoria en el fondo
-        const city = document.getElementById('city');
-        for (let i = 0; i < 15; i++) {
-            let b = document.createElement('div');
-            b.className = 'building';
-            b.style.left = (Math.random() * 100) + 'vw';
-            b.style.height = (Math.random() * 300 + 100) + 'px';
-            b.style.width = (Math.random() * 50 + 50) + 'px';
-            b.style.animationDelay = (Math.random() * 20) + 's';
-            city.appendChild(b);
-        }
-
-        // Efecto de telaraña al hacer click
+        // Animación de Spidey-Sense al hacer click
         document.addEventListener('mousedown', (e) => {
-            let web = document.createElement('div');
-            web.style.position = 'fixed';
-            web.style.left = e.clientX + 'px';
-            web.style.top = e.clientY + 'px';
-            web.style.width = '2px';
-            web.style.height = '2px';
-            web.style.background = 'white';
-            web.style.boxShadow = '0 0 10px 2px white';
-            web.style.borderRadius = '50%';
-            web.style.transition = 'transform 0.5s ease-out, opacity 0.5s';
-            document.body.appendChild(web);
-            
-            setTimeout(() => {
-                web.style.transform = 'scale(50)';
-                web.style.opacity = '0';
-            }, 10);
-            setTimeout(() => web.remove(), 600);
+            let ripple = document.createElement('div');
+            ripple.style.position = 'fixed';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            ripple.style.width = '10px';
+            ripple.style.height = '10px';
+            ripple.style.border = '2px solid red';
+            ripple.style.borderRadius = '50%';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.animation = 'ripple 0.6s ease-out';
+            ripple.style.pointerEvents = 'none';
+            document.body.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
         });
+
+        // CSS extra para el ripple
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes ripple {
+                to { width: 150px; height: 150px; opacity: 0; border-width: 1px; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
